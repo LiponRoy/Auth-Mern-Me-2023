@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 const Navbar = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.auth);
+
 	const [toggle, setToggle] = useState(false);
 
 	const toggleController = () => {
@@ -14,7 +21,7 @@ const Navbar = () => {
 					{/* left texts */}
 					<div className={logo}>
 						<div>Logo</div>
-						<div>hi,lipon</div>
+						<div>{user && user.name}</div>
 					</div>
 					{/* middle texts */}
 					<div className={navItem}>
