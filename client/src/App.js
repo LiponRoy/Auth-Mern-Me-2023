@@ -1,38 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './components/navbar/Navbar';
-import Hero from './components/hero/Hero';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from './components/home/Home';
-import Signup from './components/signup/Signup';
-import SignIn from './components/signin/SignIn';
-import SentEmail from './components/sentEmail/SentEmail';
+import Signup from './pages/signup/Signup';
+import SignIn from './pages/signin/SignIn';
+import Home from './pages/home/Home';
+import Navbar from './components/navbar/Navbar';
 import RequireAuth from './components/requireAuth/RequireAuth';
-
 function App() {
 	return (
 		<>
 			<Router>
 				<Navbar />
-				<Routes>
-					<Route
-						path='/'
-						element={
-							<RequireAuth>
-								<Home />
-							</RequireAuth>
-						}
-					/>
-					<Route path='/signup' element={<Signup />} />
-					<Route path='/login' element={<SignIn />} />
-					<Route path='/sentEmail' element={<SentEmail />} />
-
-					{/* <Route path='*' element={<NotFound />} /> */}
-				</Routes>
-				<ToastContainer></ToastContainer>
+				<div>
+					<Routes>
+						<Route
+							path='/'
+							element={
+								<RequireAuth>
+									<Home />
+								</RequireAuth>
+							}
+						/>
+						<Route path='/signIn' element={<SignIn />} />
+						<Route path='/signup' element={<Signup />} />
+					</Routes>
+				</div>
 			</Router>
+			<ToastContainer />
 		</>
 	);
 }

@@ -1,24 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import authService from './authService';
 
-const BASE_URI = 'http://localhost:9000/api/user';
+// Get user from localStorage
+const user = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
-	user: null,
+	user: user ? user : null,
 	isError: false,
+	isSuccess: false,
 	isLoading: false,
 	message: '',
 };
 
 // Register user
-export const registerApi = createAsyncThunk('auth/registerApi', async (user, thunkAPI) => {
+export const registerApi = createAsyncThunk('auth/register', async (user, thunkAPI) => {
 	try {
-		const response = await axios.post(`${BASE_URI}/register`, user);
-		// save to local storage
-		if (response.data) {
-			localStorage.setItem('user', JSON.stringify(response.data));
-		}
-		return response.data;
+		return await authService.register(user);
 	} catch (error) {
 		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
 		return thunkAPI.rejectWithValue(message);
@@ -26,46 +23,26 @@ export const registerApi = createAsyncThunk('auth/registerApi', async (user, thu
 });
 
 // Login user
-export const loginApi = createAsyncThunk('auth/loginApi', async (user, thunkAPI) => {
+export const loginApi = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 	try {
-		const response = await axios.post(`${BASE_URI}/login`, user);
-		if (response.data) {
-			localStorage.setItem('user', JSON.stringify(response.data));
-		}
-		return response.data;
-	} catch (error) {
-		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-		return thunkAPI.rejectWithValue(message);
-	}
-});
-// Login user
-export const logedUserApi = createAsyncThunk('auth/logedUserApi', async (thunkAPI) => {
-	try {
-		const response = await axios.get(`${BASE_URI}/loggeduser`);
-		return response.data;
+		return await authService.login(user);
 	} catch (error) {
 		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
 		return thunkAPI.rejectWithValue(message);
 	}
 });
 
-export const logoutApi = createAsyncThunk('auth/logoutApi', async (thunkAPI) => {
-	try {
-		// const response = await axios.post(BASE_URI + '/auth/logout');
-		const response = await axios.post(`${BASE_URI}/logout`);
-		localStorage.removeItem('user');
-		return response.data;
-	} catch (error) {
-		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-		return thunkAPI.rejectWithValue(message);
-	}
+export const logoutApi = createAsyncThunk('auth/logout', async () => {
+	await authService.logout();
 });
+
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
 		reset: (state) => {
 			state.isLoading = false;
+			state.isSuccess = false;
 			state.isError = false;
 			state.message = '';
 		},
@@ -77,6 +54,7 @@ export const authSlice = createSlice({
 			})
 			.addCase(registerApi.fulfilled, (state, action) => {
 				state.isLoading = false;
+				state.isSuccess = true;
 				state.user = action.payload;
 			})
 			.addCase(registerApi.rejected, (state, action) => {
@@ -90,22 +68,10 @@ export const authSlice = createSlice({
 			})
 			.addCase(loginApi.fulfilled, (state, action) => {
 				state.isLoading = false;
+				state.isSuccess = true;
 				state.user = action.payload;
 			})
 			.addCase(loginApi.rejected, (state, action) => {
-				state.isLoading = false;
-				state.isError = true;
-				state.message = action.payload;
-				state.user = null;
-			})
-			.addCase(logedUserApi.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(logedUserApi.fulfilled, (state, action) => {
-				state.isLoading = false;
-				state.user = action.payload;
-			})
-			.addCase(logedUserApi.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload;

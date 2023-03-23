@@ -5,61 +5,54 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    font-family: 'Roboto', sans-serif;
-  }
+	html {
+		font-family: 'Roboto', sans-serif;
+	}
 }
 
 @layer components {
-  .myBtn{
-    @apply bg-primary 
+	.myBtn {
+		@apply bg-primary 
     py-2 md:py-3 px-4 md:px-6 m-1 font-bold 
     text-sm text-white border-2 
-    rounded-lg border-gray-400 cursor-pointer hover:border-gray-500
-  }
-  .myBtn-Outline{
-    @apply 
-    py-2 md:py-3 px-4 md:px-6 m-1 font-bold 
+    rounded-lg border-gray-400 cursor-pointer hover:border-gray-500;
+	}
+	.myBtn-Outline {
+		@apply py-2 md:py-3 px-4 md:px-6 m-1 font-bold 
     text-sm border-2 
-    rounded-lg border-primary cursor-pointer hover:border-gray-400
-  }
- 
-
-  
-
-  
+    rounded-lg border-primary cursor-pointer hover:border-gray-400;
+	}
 }
 
 @layer utilities {
-  .whf {
-    /* width height full */
-    @apply h-screen w-full
-  }
+	.whf {
+		/* width height full */
+		@apply h-screen w-full;
+	}
 
-  .fm {
-    /* flex middle ( fm )*/
-    @apply flex justify-center items-center
-  }
+	.fm {
+		/* flex middle ( fm )*/
+		@apply flex justify-center items-center;
+	}
 
-  .fcm {
-    /* flex column middle ( fcm )*/
-    @apply flex flex-col justify-center items-center
-  }
-  .fcs {
-    /* flex column start ( fgs )*/
-    @apply flex flex-col content-center items-start
-  }
-  .resHeadingText {
-    /* responsive heading text*/
-    @apply text-xl md:text-2xl lg:text-4xl font-bold m-2
-  }
-  .resPeraText {
-    /* responsive pera text*/
-    @apply text-[14px] md:text-[16px]  lg:text-[18px]
-  }
-  .border-simple {
-    /* simple border*/
-    @apply border-2 border-slate-400 p-4 rounded-md
-  }
-
+	.fcm {
+		/* flex column middle ( fcm )*/
+		@apply flex flex-col justify-center items-center;
+	}
+	.fcs {
+		/* flex column start ( fgs )*/
+		@apply flex flex-col content-center items-start;
+	}
+	.resHeadingText {
+		/* responsive heading text*/
+		@apply text-xl md:text-2xl lg:text-4xl font-bold m-2;
+	}
+	.resPeraText {
+		/* responsive pera text*/
+		@apply text-[14px] md:text-[16px]  lg:text-[18px];
+	}
+	.border-simple {
+		/* simple border*/
+		@apply border-2 border-slate-400 p-4 rounded-md;
+	}
 }

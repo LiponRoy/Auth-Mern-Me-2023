@@ -1,6 +1,7 @@
 {
   "name": "tailw-example",
   "version": "0.1.0",
+   "proxy": "http://localhost:9000",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.0.0",
